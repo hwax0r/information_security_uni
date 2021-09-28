@@ -60,7 +60,8 @@ def new_alphabet_to_number(msg: str) -> str:
 
 
 def input_data_handling():
-    message = input("Ввведите сообщение: ")
+    input_data_handling.message = input("Ввведите сообщение: ")
+    message = input_data_handling.message
 
     space_replacement = '5'
     global ALPHABET, ALPHABET_REVERSE, ALPHABET_STRAIGHT
@@ -123,6 +124,15 @@ def main():
     print(f'Зашифрованное сообщение: {encrypted}')
     print(f'Дешифрованное сообщение: {decrypted_processed}')
     print(f'Необработанное дешифрованное сообщение: {decrypted}')
+
+    inp: str = input_data_handling.message
+    for _ in range(CIPHER_MSG_BLOCK_SIZE - len(inp) % CIPHER_MSG_BLOCK_SIZE):
+        inp += '_'
+
+    if inp != decrypted_processed:
+        print(inp)
+        print(decrypted_processed)
+        raise RuntimeError('Зашифрованное сообщение не совпадает с пользовательским вводом!')
 
 
 if __name__ == '__main__':
